@@ -60,6 +60,12 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.LoadLeftTeam = new System.Windows.Forms.Button();
+            this.LoadRightTeam = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.SaveLeftJson = new System.Windows.Forms.Button();
+            this.SaveRightJson = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerComboBox1
@@ -342,11 +348,65 @@
             this.label10.TabIndex = 27;
             this.label10.Text = "Seat 6";
             // 
+            // LoadLeftTeam
+            // 
+            this.LoadLeftTeam.Location = new System.Drawing.Point(13, 77);
+            this.LoadLeftTeam.Name = "LoadLeftTeam";
+            this.LoadLeftTeam.Size = new System.Drawing.Size(75, 23);
+            this.LoadLeftTeam.TabIndex = 32;
+            this.LoadLeftTeam.Text = "Load JSON";
+            this.LoadLeftTeam.UseVisualStyleBackColor = true;
+            this.LoadLeftTeam.Click += new System.EventHandler(this.LoadLeftTeam_Click);
+            // 
+            // LoadRightTeam
+            // 
+            this.LoadRightTeam.Location = new System.Drawing.Point(13, 206);
+            this.LoadRightTeam.Name = "LoadRightTeam";
+            this.LoadRightTeam.Size = new System.Drawing.Size(75, 23);
+            this.LoadRightTeam.TabIndex = 33;
+            this.LoadRightTeam.Text = "Load  JSON";
+            this.LoadRightTeam.UseVisualStyleBackColor = true;
+            this.LoadRightTeam.Click += new System.EventHandler(this.LoadRightTeam_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "JSON files|*.json";
+            this.openFileDialog1.Title = "Open team JSON";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "JSON files|*.json";
+            this.saveFileDialog1.Title = "Save team JSON";
+            // 
+            // SaveLeftJson
+            // 
+            this.SaveLeftJson.Location = new System.Drawing.Point(94, 77);
+            this.SaveLeftJson.Name = "SaveLeftJson";
+            this.SaveLeftJson.Size = new System.Drawing.Size(75, 23);
+            this.SaveLeftJson.TabIndex = 34;
+            this.SaveLeftJson.Text = "Save JSON";
+            this.SaveLeftJson.UseVisualStyleBackColor = true;
+            this.SaveLeftJson.Click += new System.EventHandler(this.SaveLeftJson_Click);
+            // 
+            // SaveRightJson
+            // 
+            this.SaveRightJson.Location = new System.Drawing.Point(94, 206);
+            this.SaveRightJson.Name = "SaveRightJson";
+            this.SaveRightJson.Size = new System.Drawing.Size(75, 23);
+            this.SaveRightJson.TabIndex = 35;
+            this.SaveRightJson.Text = "Save JSON";
+            this.SaveRightJson.UseVisualStyleBackColor = true;
+            this.SaveRightJson.Click += new System.EventHandler(this.SaveRightJson_Click);
+            // 
             // GsitoolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 273);
+            this.Controls.Add(this.SaveRightJson);
+            this.Controls.Add(this.SaveLeftJson);
+            this.Controls.Add(this.LoadRightTeam);
+            this.Controls.Add(this.LoadLeftTeam);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
@@ -421,6 +481,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button LoadLeftTeam;
+        private System.Windows.Forms.Button LoadRightTeam;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Button SaveLeftJson;
+        private System.Windows.Forms.Button SaveRightJson;
     }
 }
 

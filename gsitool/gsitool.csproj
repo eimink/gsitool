@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PkmPlayerConf.cs" />
     <Compile Include="ConfigData.cs" />
     <Compile Include="ExtendedGSIData.cs" />
     <Compile Include="DataEventArgs.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="GsitoolForm.Designer.cs">
       <DependentUpon>GsitoolForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PkmConfData.cs" />
     <Compile Include="PlayerIdNode.cs" />
     <Compile Include="PlayerSeatNode.cs" />
     <Compile Include="Program.cs" />

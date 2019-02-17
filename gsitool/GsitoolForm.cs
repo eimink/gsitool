@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSGSI.Nodes;
+using Newtonsoft.Json;
 
 namespace gsitool
 {
@@ -222,6 +224,168 @@ namespace gsitool
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             Program.playerSeats[0].SteamID = textBox1.Text;
+        }
+
+        private void LoadLeftTeam_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                System.IO.StreamReader sr = new
+                   System.IO.StreamReader(openFileDialog1.FileName);
+                var fileContents = sr.ReadToEnd();
+                sr.Close();
+                
+                var conf = JsonConvert.DeserializeObject<PkmConfData>(fileContents);
+                SetLeftTeam(conf);
+            }
+        }
+
+        private void SetLeftTeam(PkmConfData teamConfig)
+        {
+            foreach(KeyValuePair<string,PkmPlayerConf> kvp in teamConfig.players)
+            {
+                switch (kvp.Value.place)
+                {
+                    case 1:
+                        textBox1.Text = kvp.Key;
+                        Program.playerSeats[0].Name = kvp.Value.player_name;
+                        Program.playerSeats[0].SteamID = kvp.Key;
+                        break;
+                    case 2:
+                        textBox2.Text = kvp.Key;
+                        Program.playerSeats[1].Name = kvp.Value.player_name;
+                        Program.playerSeats[1].SteamID = kvp.Key;
+                        break;
+                    case 3:
+                        textBox3.Text = kvp.Key;
+                        Program.playerSeats[2].Name = kvp.Value.player_name;
+                        Program.playerSeats[2].SteamID = kvp.Key;
+                        break;
+                    case 4:
+                        textBox4.Text = kvp.Key;
+                        Program.playerSeats[3].Name = kvp.Value.player_name;
+                        Program.playerSeats[3].SteamID = kvp.Key;
+                        break;
+                    case 5:
+                        textBox5.Text = kvp.Key;
+                        Program.playerSeats[4].Name = kvp.Value.player_name;
+                        Program.playerSeats[4].SteamID = kvp.Key;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void SetRightTeam(PkmConfData teamConfig)
+        {
+            foreach (KeyValuePair<string, PkmPlayerConf> kvp in teamConfig.players)
+            {
+                switch (kvp.Value.place)
+                {
+                    case 1:
+                        textBox6.Text = kvp.Key;
+                        Program.playerSeats[5].Name = kvp.Value.player_name;
+                        Program.playerSeats[5].SteamID = kvp.Key;
+                        break;
+                    case 2:
+                        textBox7.Text = kvp.Key;
+                        Program.playerSeats[6].Name = kvp.Value.player_name;
+                        Program.playerSeats[6].SteamID = kvp.Key;
+                        break;
+                    case 3:
+                        textBox8.Text = kvp.Key;
+                        Program.playerSeats[7].Name = kvp.Value.player_name;
+                        Program.playerSeats[7].SteamID = kvp.Key;
+                        break;
+                    case 4:
+                        textBox9.Text = kvp.Key;
+                        Program.playerSeats[8].Name = kvp.Value.player_name;
+                        Program.playerSeats[8].SteamID = kvp.Key;
+                        break;
+                    case 5:
+                        textBox10.Text = kvp.Key;
+                        Program.playerSeats[9].Name = kvp.Value.player_name;
+                        Program.playerSeats[9].SteamID = kvp.Key;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void LoadRightTeam_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                System.IO.StreamReader sr = new
+                   System.IO.StreamReader(openFileDialog1.FileName);
+                var fileContents = sr.ReadToEnd();
+                sr.Close();
+
+                var conf = JsonConvert.DeserializeObject<PkmConfData>(fileContents);
+                SetRightTeam(conf);
+            }
+        }
+
+        private void SaveLeftJson_Click(object sender, EventArgs e)
+        {
+            PkmConfData data = new PkmConfData();
+            data.players = new Dictionary<string, PkmPlayerConf>();
+            for (int i = 0; i < 5; i++)
+            {
+                var pc = new PkmPlayerConf();
+                pc.channel = "cam" + (i + 1);
+                pc.place = i + 1;
+                pc.player_name = Program.playerSeats[i].Name;
+                pc.server = 0;
+                data.players.Add(Program.playerSeats[i].SteamID, pc);
+            }
+            saveFileDialog1.ShowDialog();
+            if(saveFileDialog1.FileName != "")
+            {
+                System.IO.TextWriter writer = null;
+                try
+                {
+                    writer = new StreamWriter(saveFileDialog1.FileName, false);
+                    writer.Write(JsonConvert.SerializeObject(data, Formatting.Indented));
+                }
+                finally
+                {
+                    if (writer != null)
+                        writer.Close();
+                }
+            }
+        }
+
+        private void SaveRightJson_Click(object sender, EventArgs e)
+        {
+            PkmConfData data = new PkmConfData();
+            data.players = new Dictionary<string, PkmPlayerConf>();
+            for (int i = 0; i < 5; i++)
+            {
+                var pc = new PkmPlayerConf();
+                pc.channel = "cam" + (i + 1);
+                pc.place = i + 1;
+                pc.player_name = Program.playerSeats[i+5].Name;
+                pc.server = 0;
+                data.players.Add(Program.playerSeats[i+5].SteamID, pc);
+            }
+            saveFileDialog1.ShowDialog();
+            if (saveFileDialog1.FileName != "")
+            {
+                System.IO.TextWriter writer = null;
+                try
+                {
+                    writer = new StreamWriter(saveFileDialog1.FileName, false);
+                    writer.Write(JsonConvert.SerializeObject(data, Formatting.Indented));
+                }
+                finally
+                {
+                    if (writer != null)
+                        writer.Close();
+                }
+            }
         }
     }
 }

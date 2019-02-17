@@ -5,6 +5,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System;
 
 namespace gsitool
 {
@@ -42,14 +43,21 @@ namespace gsitool
 
         private void SendToEndpoint(string uri, string json)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            try
             {
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(json);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when sending data: " + e.Message);
             }
         }
     }
