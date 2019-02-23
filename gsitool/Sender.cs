@@ -49,6 +49,8 @@ namespace gsitool
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 httpWebRequest.ContentLength = json.Length;
+                httpWebRequest.KeepAlive = false;
+                httpWebRequest.Timeout = 2000;
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
                     streamWriter.Write(json);
