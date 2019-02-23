@@ -30,7 +30,6 @@ namespace gsitool
 
         private async void Send(string json)
         {
-            Debug.Print(json);
             if (endpoints != null)
             {
                 foreach (string uri in endpoints)
@@ -45,17 +44,19 @@ namespace gsitool
         {
             try
             {
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                byte[] bytes = encoding.GetBytes(json);
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.ContentType = "application/json;charset=utf-8";
                 httpWebRequest.Method = "POST";
-                httpWebRequest.ContentLength = json.Length;
+                httpWebRequest.ContentLength = bytes.Length;
                 httpWebRequest.KeepAlive = false;
                 httpWebRequest.Timeout = 2000;
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                using (Stream requestStream = httpWebRequest.GetRequestStream())
                 {
-                    streamWriter.Write(json);
-                    streamWriter.Flush();
-                    streamWriter.Close();
+                    requestStream.Write(bytes, 0, bytes.Length);
+                    requestStream.Flush();
+                    requestStream.Close();
                 }
             }
             catch (Exception e)
